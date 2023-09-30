@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import Categories from "./components/Categories"
+import Movies from "./components/Movies"
+import allMoviesData from "./dataMovies"
+import { useState } from "react"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    const [allMovies, setAllMovies] = useState(allMoviesData)
+    const [allMoviesFiltered, setAllMoviesFiltered] = useState(allMoviesData)
+    
+    const kategorieFilterHandler = (category) => {
+        console.log(`Filtr: ${category}`)
+
+        if ( category !== "" ) {
+            const movies = allMovies.filter( (movie) => {
+                return movie.category === category
+            })
+            setAllMoviesFiltered(movies)
+        }
+        else {
+            setAllMoviesFiltered(allMovies)
+        }
+
+    }
+
+    return (
+        <>
+            <Categories kategorieFilterHandler={kategorieFilterHandler}/>
+            <Movies allMovies={allMoviesFiltered}/>
+        </>
+    )
 }
 
-export default App;
+export default App
